@@ -1,7 +1,6 @@
 package dev.danvega.springBootJpa.controller;
 
 import dev.danvega.springBootJpa.model.User;
-import dev.danvega.springBootJpa.repository.UserRepository;
 import dev.danvega.springBootJpa.service.UserServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
