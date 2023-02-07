@@ -1,10 +1,9 @@
 package dev.danvega.springBootJpa.controller;
 
 import dev.danvega.springBootJpa.model.User;
+import dev.danvega.springBootJpa.response.Response;
 import dev.danvega.springBootJpa.service.UserServiceImpl;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -16,12 +15,22 @@ public class UserController {
     }
 
     @PostMapping
-    public User crateUser(@RequestBody User user){
-        return userService.createUser(user);
+    public Response crateUser(@RequestBody User user){
+        return new Response(200, "Success", userService.createUser(user));
     }
 
     @GetMapping
-    public List<User> getAllUser(User user){
-        return userService.getAllUser(user);
+    public Response getAllUser(User user){
+        return new Response(200, "Success", userService.getAllUser(user));
+    }
+
+    @GetMapping("/find/{id}")
+    public Response fitndById(@RequestBody @PathVariable("id") Long id){
+        return new Response(200, "Success", userService.findById(id));
+    }
+
+    @GetMapping("/delete/{id}")
+    public Response deleteById(@PathVariable("id") Long id){
+        return new Response(200, "Success", userService.deleteById(id));
     }
 }
