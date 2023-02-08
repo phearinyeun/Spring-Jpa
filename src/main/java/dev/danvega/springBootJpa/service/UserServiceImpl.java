@@ -7,8 +7,6 @@ import dev.danvega.springBootJpa.response.Response;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,30 +24,52 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user) {
-        return userRepository.save(user);
+    public Response createUser(User user) {
+        return new Response(200, "Success", userRepository.save(user));
     }
 
     @Override
-    public List<User> getAllUser(User user) {
-        return userRepository.findAll();
+    public Response getAllUser(User user) {
+        return new Response(200, "Success", userRepository.findAll());
     }
 
     @Override
-    public Optional<User> findById(Long id) {
-        List<User> getAllUser = userRepository.findAll();
-        if (!getAllUser.isEmpty()){
-            return userRepository.findById(id);
+    public Response findById(Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()){
+            return new Response(200, "Success",userRepository.findById(id));
         }
-        throw new NotFoundException(id, "Not found Id", id.toString());
+        throw new NotFoundException(id, "Could not found the id", id.toString());
     }
 
     @Override
-    public Optional<User> deleteById(Long id) {
+    public Response deleteById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         if (userOptional.isPresent()){
             userRepository.deleteById(id);
+            return null;
         }
         throw new NotFoundException(id, "Could not Found Id", id.toString());
+    }
+
+    @Override
+    public Response update(User user, Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()){
+            user.setId(id);
+            userRepository.save(user);
+            return new Response(200, "Success updated user", user);
+        }
+        throw new NotFoundException(id, "Not Found the Id", id.toString());
+    }
+
+    @Override
+    public List<User> findByActiveTrue() {
+        return userRepository.findByActiveFalse();
+    }
+
+    @Override
+    public List<User> findByActiveFalse() {
+        return null;
     }
 }

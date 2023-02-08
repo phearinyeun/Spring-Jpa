@@ -5,7 +5,7 @@ public class NotFoundException extends RuntimeException{
     private String result;
 
     public NotFoundException (Long id, String... message){
-        super(message.length > 0 ? String.join("\n", message) : "Could not find id: " + id.toString());
+        super(message.length > 0 ? String.join(" ", message) : "Could not find id: " + id.toString());
     }
     public NotFoundException(String category1, String s, String category){
 

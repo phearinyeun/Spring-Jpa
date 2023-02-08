@@ -16,21 +16,31 @@ public class UserController {
 
     @PostMapping
     public Response crateUser(@RequestBody User user){
-        return new Response(200, "Success", userService.createUser(user));
+        return userService.createUser(user);
     }
 
     @GetMapping
     public Response getAllUser(User user){
-        return new Response(200, "Success", userService.getAllUser(user));
+        return userService.getAllUser(user);
     }
 
     @GetMapping("/find/{id}")
-    public Response fitndById(@RequestBody @PathVariable("id") Long id){
-        return new Response(200, "Success", userService.findById(id));
+    public Response findById(@RequestBody @PathVariable("id") Long id){
+        return userService.findById(id);
     }
 
     @GetMapping("/delete/{id}")
     public Response deleteById(@PathVariable("id") Long id){
-        return new Response(200, "Success", userService.deleteById(id));
+        return userService.deleteById(id);
+    }
+
+    @PostMapping("/update/{id}")
+    public Response updateUser (@RequestBody @PathVariable("id") Long id, User user){
+        return userService.update(user, id);
+    }
+
+    @GetMapping("/active/{active}")
+    public Response findByActiveFalse(@RequestBody @PathVariable("active") Boolean active){
+        return new Response(200, "Success", userService.findByActiveFalse());
     }
 }
