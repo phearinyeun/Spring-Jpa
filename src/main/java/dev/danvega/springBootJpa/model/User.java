@@ -22,8 +22,8 @@ public class User {
     @Column(name = "age", length = 25, nullable = false, unique = false)
     private Integer age;
     @Column(name = "birthDate", length = 50)
-//    @DateTimeFormat(pattern = "dd-MM-yy")
-    private String birthDate;
+    @DateTimeFormat(pattern = "dd-MM-yy")
+    private ZonedDateTime birthDate;
     @Column(name = "active", length = 15, nullable = false, unique = false)
     private Boolean active;
 }

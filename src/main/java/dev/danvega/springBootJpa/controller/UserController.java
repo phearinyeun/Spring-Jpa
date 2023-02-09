@@ -1,6 +1,7 @@
 package dev.danvega.springBootJpa.controller;
 
 import dev.danvega.springBootJpa.model.User;
+import dev.danvega.springBootJpa.repository.UserRepository;
 import dev.danvega.springBootJpa.response.Response;
 import dev.danvega.springBootJpa.service.UserServiceImpl;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserServiceImpl userService;
 
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserServiceImpl userService,
+                          UserRepository userRepository) {
         this.userService = userService;
     }
 
@@ -25,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping("/find/{id}")
-    public Response findById(@RequestBody @PathVariable("id") Long id){
+    public Response findById(@PathVariable("id") Long id){
         return userService.findById(id);
     }
 
@@ -35,12 +37,12 @@ public class UserController {
     }
 
     @PostMapping("/update/{id}")
-    public Response updateUser (@RequestBody @PathVariable("id") Long id, User user){
+    public Response updateUser (@PathVariable("id") Long id, @RequestBody User user){
         return userService.update(user, id);
     }
 
     @GetMapping("/active/{active}")
-    public Response findByActiveFalse(@RequestBody @PathVariable("active") Boolean active){
-        return new Response(200, "Success", userService.findByActiveFalse());
+    public Response findByActive(@PathVariable Boolean active){
+        return userService.findByActive(active);
     }
 }

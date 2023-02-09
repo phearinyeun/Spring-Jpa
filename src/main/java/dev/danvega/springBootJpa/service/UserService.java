@@ -13,6 +13,7 @@ public interface UserService {
     Response findById(Long id);
     Response deleteById(Long id);
     Response update (User user, Long id);
-    List<User> findByActiveTrue();
-    List<User> findByActiveFalse();
+//    List<User> findByActiveTrue();
+//    List<User> findByActiveFalse();
+    Response findByActive(Boolean active);
 }

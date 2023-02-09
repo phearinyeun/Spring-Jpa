@@ -4,6 +4,7 @@ import dev.danvega.springBootJpa.model.User;
 import dev.danvega.springBootJpa.repository.UserRepository;
 import dev.danvega.springBootJpa.response.NotFoundException;
 import dev.danvega.springBootJpa.response.Response;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.awt.print.Pageable;
@@ -30,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Response getAllUser(User user) {
-        return new Response(200, "Success", userRepository.findAll());
+        return new Response(200, "Success", userRepository.findAll(PageRequest.of(0,10)));
     }
 
     @Override
@@ -64,12 +65,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findByActiveTrue() {
-        return userRepository.findByActiveFalse();
-    }
-
-    @Override
-    public List<User> findByActiveFalse() {
-        return null;
+    public Response findByActive(Boolean active) {
+        return new Response(200, "Success", userRepository.findByActive(active));
     }
 }
