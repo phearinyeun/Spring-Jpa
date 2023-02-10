@@ -1,14 +1,17 @@
 package dev.danvega.springBootJpa.service;
 
 import dev.danvega.springBootJpa.model.User;
+import dev.danvega.springBootJpa.repository.CustomerSpecifications;
 import dev.danvega.springBootJpa.repository.UserRepository;
 import dev.danvega.springBootJpa.response.NotFoundException;
 import dev.danvega.springBootJpa.response.Response;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import java.awt.print.Pageable;
+import javax.crypto.Cipher;
 import java.util.Optional;
+
+import static org.springframework.data.jpa.domain.Specification.where;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -19,18 +22,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Response getAllUser(Pageable pageable) {
-        return null;
-    }
-
-    @Override
     public Response createUser(User user) {
         return new Response(200, "Success", userRepository.save(user));
-    }
-
-    @Override
-    public Response getAllUser(User user) {
-        return new Response(200, "Success", userRepository.findAll(PageRequest.of(0,10)));
     }
 
     @Override
@@ -66,5 +59,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public Response findByActive(Boolean active) {
         return new Response(200, "Success", userRepository.findByActive(active));
+    }
+
+    @Override
+    public Page<User> findAll(String name, org.springframework.data.domain.Pageable pageable, Integer age, Integer ageMax, Integer ageMin) {
+        return userRepository.findAll(
+                where(CustomerSpecifications.searchByName(name))
+                        .and(
+                                where(CustomerSpecifications.getAge(age)
+                                .or(CustomerSpecifications.getAgeBetween(ageMax, ageMin))
+                        )
+                )
+                ,pageable);
     }
 }

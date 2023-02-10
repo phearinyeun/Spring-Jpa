@@ -1,9 +1,12 @@
 package dev.danvega.springBootJpa.controller;
 
 import dev.danvega.springBootJpa.model.User;
+import dev.danvega.springBootJpa.repository.UserPaginationAndFilter;
 import dev.danvega.springBootJpa.repository.UserRepository;
 import dev.danvega.springBootJpa.response.Response;
 import dev.danvega.springBootJpa.service.UserServiceImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,8 +25,12 @@ public class UserController {
     }
 
     @GetMapping
-    public Response getAllUser(User user){
-        return userService.getAllUser(user);
+    public Response findAll(UserPaginationAndFilter userPaginationAndFilter){
+        return new Response(200, "Success" ,userService.findAll(userPaginationAndFilter.getName(),
+                PageRequest.of(userPaginationAndFilter.getPage(), userPaginationAndFilter.getSize(), Sort.by("age").and(Sort.by("name").ascending()).descending()),
+                userPaginationAndFilter.getAge(),
+                userPaginationAndFilter.getAgemax(),
+                userPaginationAndFilter.getAgemin()));
     }
 
     @GetMapping("/find/{id}")
