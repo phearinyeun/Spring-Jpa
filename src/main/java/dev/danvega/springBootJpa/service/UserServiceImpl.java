@@ -5,10 +5,11 @@ import dev.danvega.springBootJpa.repository.CustomerSpecifications;
 import dev.danvega.springBootJpa.repository.UserRepository;
 import dev.danvega.springBootJpa.response.NotFoundException;
 import dev.danvega.springBootJpa.response.Response;
+import dev.danvega.springBootJpa.response.UserNotFoundException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.Cipher;
 import java.util.Optional;
 
 import static org.springframework.data.jpa.domain.Specification.where;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
         if (userOptional.isPresent()){
             return new Response(200, "Success",userRepository.findById(id));
         }
-        throw new NotFoundException(id, "Could not found the id", id.toString());
+        throw new UserNotFoundException();
     }
 
     @Override
@@ -62,7 +63,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<User> findAll(String name, org.springframework.data.domain.Pageable pageable, Integer age, Integer ageMax, Integer ageMin) {
+    public Page<User> findAll(String name, Pageable pageable, Integer age, Integer ageMax, Integer ageMin) {
         return userRepository.findAll(
                 where(CustomerSpecifications.searchByName(name))
                         .and(

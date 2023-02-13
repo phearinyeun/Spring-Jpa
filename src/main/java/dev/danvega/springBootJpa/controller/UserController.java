@@ -6,6 +6,7 @@ import dev.danvega.springBootJpa.repository.UserRepository;
 import dev.danvega.springBootJpa.response.Response;
 import dev.danvega.springBootJpa.service.UserServiceImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,4 +53,5 @@ public class UserController {
     public Response findByActive(@PathVariable Boolean active){
         return userService.findByActive(active);
     }
+
 }

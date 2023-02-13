@@ -3,6 +3,7 @@ package dev.danvega.springBootJpa.service;
 import dev.danvega.springBootJpa.model.User;
 import dev.danvega.springBootJpa.response.Response;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
     Response createUser (User user);
@@ -10,5 +11,5 @@ public interface UserService {
     Response deleteById(Long id);
     Response update (User user, Long id);
     Response findByActive(Boolean active);
-    Page<User> findAll(String name, org.springframework.data.domain.Pageable pageable, Integer age, Integer agemin, Integer agemax);
+    Page<User> findAll(String name, Pageable pageable, Integer age, Integer ageMin, Integer ageMax);
 }
