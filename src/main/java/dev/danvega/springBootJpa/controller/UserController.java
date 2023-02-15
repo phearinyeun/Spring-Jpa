@@ -6,7 +6,6 @@ import dev.danvega.springBootJpa.repository.UserRepository;
 import dev.danvega.springBootJpa.response.Response;
 import dev.danvega.springBootJpa.service.UserServiceImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,13 +21,16 @@ public class UserController {
 
     @PostMapping
     public Response crateUser(@RequestBody User user){
-        return userService.createUser(user);
+        userService.createUser(user);
+        return null;
     }
 
     @GetMapping
     public Response findAll(UserPaginationAndFilter userPaginationAndFilter){
         return new Response(200, "Success" ,userService.findAll(userPaginationAndFilter.getName(),
-                PageRequest.of(userPaginationAndFilter.getPage(), userPaginationAndFilter.getSize(), Sort.by("age").and(Sort.by("name").ascending()).descending()),
+                PageRequest.of(userPaginationAndFilter.getPage(), userPaginationAndFilter.getSize(),
+                        Sort.by("age")
+                                .and(Sort.by("name").ascending()).descending()),
                 userPaginationAndFilter.getAge(),
                 userPaginationAndFilter.getAgemax(),
                 userPaginationAndFilter.getAgemin()));

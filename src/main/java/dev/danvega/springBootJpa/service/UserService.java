@@ -4,6 +4,7 @@ import dev.danvega.springBootJpa.model.User;
 import dev.danvega.springBootJpa.response.Response;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 public interface UserService {
     Response createUser (User user);

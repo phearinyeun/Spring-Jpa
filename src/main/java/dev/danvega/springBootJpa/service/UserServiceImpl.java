@@ -8,8 +8,12 @@ import dev.danvega.springBootJpa.response.Response;
 import dev.danvega.springBootJpa.response.UserNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Optional;
 
 import static org.springframework.data.jpa.domain.Specification.where;
@@ -23,7 +27,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Response createUser(User user) {
+    public Response<User> createUser(User user) {
         return new Response(200, "Success", userRepository.save(user));
     }
 
@@ -33,7 +37,7 @@ public class UserServiceImpl implements UserService {
         if (userOptional.isPresent()){
             return new Response(200, "Success",userRepository.findById(id));
         }
-        throw new UserNotFoundException();
+        throw new NotFoundException(id, "Not Found id ", id.toString());
     }
 
     @Override
