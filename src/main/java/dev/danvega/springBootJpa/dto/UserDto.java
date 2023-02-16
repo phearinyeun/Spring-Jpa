@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class UserDto {
     private Long id;
-    private String name;
+    private String userName;
     private Integer age;
     private LocalDateTime birthDate;
     private Boolean active;

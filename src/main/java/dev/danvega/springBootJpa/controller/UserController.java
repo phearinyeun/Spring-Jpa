@@ -1,5 +1,6 @@
 package dev.danvega.springBootJpa.controller;
 
+import dev.danvega.springBootJpa.mapper.UserStructMapper;
 import dev.danvega.springBootJpa.model.User;
 import dev.danvega.springBootJpa.repository.UserPaginationAndFilter;
 import dev.danvega.springBootJpa.repository.UserRepository;
@@ -7,21 +8,24 @@ import dev.danvega.springBootJpa.response.Response;
 import dev.danvega.springBootJpa.service.UserServiceImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+    private final UserStructMapper userStructMapper;
     private final UserServiceImpl userService;
 
     public UserController(UserServiceImpl userService,
-                          UserRepository userRepository) {
+                          UserRepository userRepository, UserStructMapper userStructMapper) {
         this.userService = userService;
+        this.userStructMapper = userStructMapper;
     }
 
     @PostMapping
-    public Response crateUser(@RequestBody User user){
-        userService.createUser(user);
+    public Response crateUser(@Validated @RequestBody User user){
+        userService.createUser(userStructMapper.userToUserDto(user));
         return null;
     }
 
@@ -55,5 +59,4 @@ public class UserController {
     public Response findByActive(@PathVariable Boolean active){
         return userService.findByActive(active);
     }
-
 }

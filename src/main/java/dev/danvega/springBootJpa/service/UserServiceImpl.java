@@ -5,15 +5,10 @@ import dev.danvega.springBootJpa.repository.CustomerSpecifications;
 import dev.danvega.springBootJpa.repository.UserRepository;
 import dev.danvega.springBootJpa.response.NotFoundException;
 import dev.danvega.springBootJpa.response.Response;
-import dev.danvega.springBootJpa.response.UserNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Optional;
 
 import static org.springframework.data.jpa.domain.Specification.where;
@@ -27,7 +22,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Response<User> createUser(User user) {
+    public Response createUser(User user) {
         return new Response(200, "Success", userRepository.save(user));
     }
 

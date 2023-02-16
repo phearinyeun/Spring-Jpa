@@ -1,9 +1,7 @@
 package dev.danvega.springBootJpa.model;
 
-import dev.danvega.springBootJpa.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
-import org.modelmapper.ModelMapper;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.ZonedDateTime;
@@ -28,9 +26,4 @@ public class User {
     private ZonedDateTime birthDate;
     @Column(name = "active", length = 15, nullable = false, unique = false)
     private Boolean active;
-
-
-    ModelMapper modelMapper = new ModelMapper();
-    UserDto userDto = modelMapper.map(getUserDto() ,UserDto.class);
-
 }
