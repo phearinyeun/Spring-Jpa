@@ -1,6 +1,6 @@
 package dev.danvega.springBootJpa.controller;
 
-import dev.danvega.springBootJpa.mapper.UserStructMapper;
+import dev.danvega.springBootJpa.mapper.UserMapper;
 import dev.danvega.springBootJpa.model.User;
 import dev.danvega.springBootJpa.repository.UserPaginationAndFilter;
 import dev.danvega.springBootJpa.repository.UserRepository;
@@ -11,25 +11,31 @@ import org.springframework.data.domain.Sort;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    private final UserStructMapper userStructMapper;
     private final UserServiceImpl userService;
 
     public UserController(UserServiceImpl userService,
-                          UserRepository userRepository, UserStructMapper userStructMapper) {
+                          UserRepository userRepository) {
         this.userService = userService;
-        this.userStructMapper = userStructMapper;
+    }
+
+    @GetMapping
+    public List<User> read(@RequestBody User user){
+        return userService.read(user);
     }
 
     @PostMapping
     public Response crateUser(@Validated @RequestBody User user){
-        userService.createUser(userStructMapper.userToUserDto(user));
+        userService.createUser(user);
         return null;
     }
 
-    @GetMapping
+    @GetMapping("/getall")
     public Response findAll(UserPaginationAndFilter userPaginationAndFilter){
         return new Response(200, "Success" ,userService.findAll(userPaginationAndFilter.getName(),
                 PageRequest.of(userPaginationAndFilter.getPage(), userPaginationAndFilter.getSize(),

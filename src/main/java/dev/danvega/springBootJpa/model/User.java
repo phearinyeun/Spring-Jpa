@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 @Data
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "users")
@@ -23,7 +25,7 @@ public class User {
     private Integer age;
     @Column(name = "birthDate", length = 50)
     @DateTimeFormat(pattern = "dd-MM-yy")
-    private ZonedDateTime birthDate;
+    private LocalDateTime birthDate;
     @Column(name = "active", length = 15, nullable = false, unique = false)
     private Boolean active;
 }

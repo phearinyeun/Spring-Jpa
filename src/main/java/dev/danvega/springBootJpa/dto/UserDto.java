@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class UserDto {
     private Long id;
     private String userName;
-    private Integer age;
+    private Integer userAge;
     private LocalDateTime birthDate;
     private Boolean active;
 }

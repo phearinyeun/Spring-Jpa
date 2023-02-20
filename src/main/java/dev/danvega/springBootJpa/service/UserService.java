@@ -6,7 +6,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface UserService {
+    List<User> read(User user);
     Response createUser (User user);
     Response findById(Long id);
     Response deleteById(Long id);
