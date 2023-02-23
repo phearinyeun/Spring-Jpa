@@ -24,10 +24,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping
-    public List<User> read(@RequestBody User user){
-        return userService.read(user);
-    }
 
     @PostMapping
     public Response crateUser(@Validated @RequestBody User user){

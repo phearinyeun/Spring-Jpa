@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface UserService {
-    List<User> read(User user);
+
     Response createUser (User user);
     Response findById(Long id);
     Response deleteById(Long id);
